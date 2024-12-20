@@ -5,7 +5,7 @@
   "main": "server.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --exec babel-node src/server.js"  
+    "start": "nodemon --exec babel-node src/server.js"
   },
   "author": "Dao Anh Duc",
   "license": "ISC",
@@ -13,10 +13,12 @@
     "@babel/core": "7.15.4",
     "@babel/node": "7.15.4",
     "@babel/preset-env": "7.15.4",
+    "bcryptjs": "^2.4.3",
     "body-parser": "1.20.3",
     "dotenv": "16.4.7",
     "ejs": "3.1.10",
     "express": "4.21.2",
+    "mysql2": "^3.11.5",
     "nodemon": "3.1.9"
   }
 }
