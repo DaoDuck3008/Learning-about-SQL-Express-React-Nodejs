@@ -1,19 +1,19 @@
-const { CreateUser } = require("../service/CRUDservice");
+import CRUDservice from "../service/CRUDservice";
 import pool from "../configs/database";
 
 const handleHelloWorld = (req, res) => {
   return res.render("home.ejs");
 };
 
-const getCreateUserPage = (req, res) => {
-  return res.render("user.ejs");
+const getCreateUserPage = async (req, res) => {
+  const listUser = await CRUDservice.printListUser();
+  return res.render("user.ejs", { listUser: listUser });
 };
 
 const handleCreateNewUser = async (req, res) => {
   const { email, password, username } = req.body;
-  console.log(">>> check user: ", email, password, username);
-  const results = await CreateUser(email, password, username);
-  return res.send("Created an user");
+  await CRUDservice.CreateUser(email, password, username);
+  return res.send("Create a new user!!!");
 };
 
 module.exports = {
