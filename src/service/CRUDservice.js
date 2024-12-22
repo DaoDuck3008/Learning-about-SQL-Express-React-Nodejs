@@ -29,8 +29,28 @@ const printListUser = async () => {
   return results;
 };
 
+const getUserData = async (id) => {
+  const [results, fields] = await pool.query(
+    `SELECT * FROM users WHERE id = ?`,
+    [id]
+  );
+  return results;
+};
+
+const UpdateUser = async (userData) => {
+  const { email, username, id } = userData;
+  const [results, fields] = await pool.query(
+    `UPDATE users SET email = ?, username = ? WHERE id = ?`,
+    [email, username, id]
+  );
+
+  return results;
+};
+
 module.exports = {
   createUser,
   printListUser,
   deleteUser,
+  getUserData,
+  UpdateUser,
 };

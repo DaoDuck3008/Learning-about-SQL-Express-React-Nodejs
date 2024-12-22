@@ -14,7 +14,7 @@
     <div class="container">
       <div class="row">
         <!-- Insert an user -->
-        <form action="/users/create-user" method="POST" class="mt-3">
+        <form action="/user/create-user" method="POST" class="mt-3">
           <h3>Create a new user</h3>
           <div class="mb-3 col-6">
             <label for="email" class="form-label">Email address</label>
@@ -71,9 +71,19 @@
               <td><%= user.username %></td>
               <td>
                 <!-- edit user -->
-                <button class="btn btn-warning">Edit</button>
+                <form
+                  style="display: inline"
+                  action="/user/update-user/<%= user.id %>"
+                  method="get"
+                >
+                  <button class="btn btn-warning">Edit</button>
+                </form>
                 <!-- delete user -->
-                <form action="/user/delete-user/<%= user.id %>" method="post">
+                <form
+                  style="display: inline"
+                  action="/user/delete-user/<%= user.id %>"
+                  method="post"
+                >
                   <button class="btn btn-danger">Delete</button>
                 </form>
               </td>
