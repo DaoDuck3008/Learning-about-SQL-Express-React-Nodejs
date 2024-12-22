@@ -8,12 +8,19 @@ const hashUserPassword = (userPassword) => {
   return hashPassword;
 };
 
-const CreateUser = async (email, password, username) => {
+const createUser = async (email, password, username) => {
   const hashPass = hashUserPassword(password);
   const [results, fields] = await pool.query(
     `INSERT INTO users (email, password, username) VALUES (?,?,?)`,
     [email, hashPass, username]
   );
+  return results;
+};
+
+const deleteUser = async (id) => {
+  const [results, fields] = await pool.query("DELETE FROM users WHERE id = ?", [
+    id,
+  ]);
   return results;
 };
 
@@ -23,6 +30,7 @@ const printListUser = async () => {
 };
 
 module.exports = {
-  CreateUser,
+  createUser,
   printListUser,
+  deleteUser,
 };

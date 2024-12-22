@@ -1,5 +1,4 @@
 import CRUDservice from "../service/CRUDservice";
-import pool from "../configs/database";
 
 const handleHelloWorld = (req, res) => {
   return res.render("home.ejs");
@@ -10,14 +9,21 @@ const getCreateUserPage = async (req, res) => {
   return res.render("user.ejs", { listUser: listUser });
 };
 
-const handleCreateNewUser = async (req, res) => {
+const handleCreateAnUser = async (req, res) => {
   const { email, password, username } = req.body;
-  await CRUDservice.CreateUser(email, password, username);
-  return res.send("Create a new user!!!");
+  await CRUDservice.createUser(email, password, username);
+  return res.redirect("/user");
+};
+
+const handleDeleteAnUser = async (req, res) => {
+  const id = req.params.id;
+  await CRUDservice.deleteUser(id);
+  return res.redirect("/user");
 };
 
 module.exports = {
   handleHelloWorld,
   getCreateUserPage,
-  handleCreateNewUser,
+  handleCreateAnUser,
+  handleDeleteAnUser,
 };
