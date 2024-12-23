@@ -28,33 +28,53 @@ const createUser = async (email, password, username) => {
 };
 
 const deleteUser = async (id) => {
-  const [results, fields] = await pool.query("DELETE FROM user WHERE id = ?", [
-    id,
-  ]);
-  return results;
+  // const [results, fields] = await pool.query("DELETE FROM user WHERE id = ?", [
+  //   id,
+  // ]);
+  // return results;
+
+  await db.User.destroy({
+    where: {
+      id: id,
+    },
+  });
 };
 
 const printListUser = async () => {
-  const [results, fields] = await pool.query(`SELECT * FROM user`, []);
-  return results;
+  // const [results, fields] = await pool.query(`SELECT * FROM user`, []);
+  // return results;
+  return await db.User.findAll();
 };
 
 const getUserData = async (id) => {
-  const [results, fields] = await pool.query(
-    `SELECT * FROM user WHERE id = ?`,
-    [id]
-  );
-  return results;
+  // const [results, fields] = await pool.query(
+  //   `SELECT * FROM user WHERE id = ?`,
+  //   [id]
+  // );
+  // return results;
+  return await db.User.findOne({
+    where: {
+      id: id,
+    },
+  });
 };
 
 const UpdateUser = async (userData) => {
   const { email, username, id } = userData;
-  const [results, fields] = await pool.query(
-    `UPDATE user SET email = ?, username = ? WHERE id = ?`,
-    [email, username, id]
-  );
+  // const [results, fields] = await pool.query(
+  //   `UPDATE user SET email = ?, username = ? WHERE id = ?`,
+  //   [email, username, id]
+  // );
 
-  return results;
+  // return results;
+  return await db.User.update(
+    { email: email, username: username },
+    {
+      where: {
+        id: id,
+      },
+    }
+  );
 };
 
 module.exports = {

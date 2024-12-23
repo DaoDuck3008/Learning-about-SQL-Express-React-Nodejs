@@ -24,10 +24,11 @@ const handleDeleteAnUser = async (req, res) => {
 const getUpdateUserPage = async (req, res) => {
   const id = req.params.id;
   const user = await CRUDservice.getUserData(id);
-  let userData = {};
-  if (user && user.length > 0) {
-    userData = user[0];
-  }
+  // let userData = {};
+  // // if (user && user.length > 0) {
+  // //   userData = user[0];
+  // // }
+  let userData = user;
   return res.render("user-update.ejs", { user: userData });
 };
 
