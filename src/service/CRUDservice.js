@@ -11,27 +11,27 @@ const hashUserPassword = (userPassword) => {
 const createUser = async (email, password, username) => {
   const hashPass = hashUserPassword(password);
   const [results, fields] = await pool.query(
-    `INSERT INTO users (email, password, username) VALUES (?,?,?)`,
+    `INSERT INTO user (email, password, username) VALUES (?,?,?)`,
     [email, hashPass, username]
   );
   return results;
 };
 
 const deleteUser = async (id) => {
-  const [results, fields] = await pool.query("DELETE FROM users WHERE id = ?", [
+  const [results, fields] = await pool.query("DELETE FROM user WHERE id = ?", [
     id,
   ]);
   return results;
 };
 
 const printListUser = async () => {
-  const [results, fields] = await pool.query(`SELECT * FROM users`, []);
+  const [results, fields] = await pool.query(`SELECT * FROM user`, []);
   return results;
 };
 
 const getUserData = async (id) => {
   const [results, fields] = await pool.query(
-    `SELECT * FROM users WHERE id = ?`,
+    `SELECT * FROM user WHERE id = ?`,
     [id]
   );
   return results;
@@ -40,7 +40,7 @@ const getUserData = async (id) => {
 const UpdateUser = async (userData) => {
   const { email, username, id } = userData;
   const [results, fields] = await pool.query(
-    `UPDATE users SET email = ?, username = ? WHERE id = ?`,
+    `UPDATE user SET email = ?, username = ? WHERE id = ?`,
     [email, username, id]
   );
 
