@@ -41,6 +41,16 @@ const deleteUser = async (id) => {
 };
 
 const printListUser = async () => {
+  //test relationships
+  const newUser = await db.User.findOne({
+    where: { id: 1 },
+    include: { model: db.Group },
+    raw: true,
+    nest: true,
+  });
+
+  console.log(">>> check new users: ", newUser);
+
   // const [results, fields] = await pool.query(`SELECT * FROM user`, []);
   // return results;
   return await db.User.findAll();

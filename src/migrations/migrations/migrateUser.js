@@ -35,7 +35,7 @@ module.exports = {
       sex: {
         type: Sequelize.STRING,
       },
-      username: {
+      groupId: {
         type: Sequelize.INTEGER,
       },
     });

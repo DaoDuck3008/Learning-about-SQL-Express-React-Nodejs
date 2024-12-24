@@ -9,6 +9,8 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
+      User.belongsTo(models.Group);
+      User.belongsToMany(models.Project, { through: "ProjectUser" });
     }
   }
   User.init(
@@ -19,7 +21,7 @@ module.exports = (sequelize, DataTypes) => {
       address: DataTypes.STRING,
       phone: DataTypes.STRING,
       sex: DataTypes.STRING,
-      group_id: DataTypes.INTEGER,
+      groupId: DataTypes.INTEGER,
     },
     {
       sequelize,
