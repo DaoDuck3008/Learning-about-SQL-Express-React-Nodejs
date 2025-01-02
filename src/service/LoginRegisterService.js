@@ -1,5 +1,6 @@
 import db from "../models/models/index";
 import bcrypt from "bcryptjs";
+import { Op } from "sequelize";
 const salt = bcrypt.genSaltSync(10);
 
 const checkEmailExist = async (userEmail) => {
@@ -21,6 +22,10 @@ const checkPhoneExist = async (userPhone) => {
 const hashUserPassword = (userPassword) => {
   const hashPassword = bcrypt.hashSync(userPassword, salt);
   return hashPassword;
+};
+
+const checkPasswordCorrect = async (password, hashpass) => {
+  return await bcrypt.compare(password, hashpass);
 };
 
 const register = async (rawUserData) => {
@@ -65,6 +70,54 @@ const register = async (rawUserData) => {
   }
 };
 
+const handleLoginUser = async (rawData) => {
+  try {
+    // check email or phone exist?
+    const user = await db.User.findOne({
+      where: {
+        [Op.or]: [
+          {
+            email: rawData.valueLogin,
+          },
+          {
+            phone: rawData.valueLogin,
+          },
+        ],
+      },
+    });
+
+    // console.log(">>> check sequelize object: ", user);
+    console.log(">>> check javascript object: ", user.get({ plain: true }));
+    if (user) {
+      if (await checkPasswordCorrect(rawData.password, user.password)) {
+        console.log("Login seccessfully!");
+        return {
+          EM: "Login successfully!",
+          EC: 0,
+          DT: "",
+        };
+      }
+    }
+
+    console.log(
+      `Not found user email/phone number: ${rawData.valueLogin} with password: ${rawData.password} `
+    );
+    return {
+      EM: "Wrong email address/ phone number or password!",
+      EC: -1,
+      DT: "",
+    };
+  } catch (error) {
+    console.log(">>> Error: ", error);
+    return {
+      EM: "There are something wrongs in service.",
+      EC: -2,
+      DT: "",
+    };
+  }
+};
+
 module.exports = {
   register,
+  handleLoginUser,
 };

@@ -8,6 +8,7 @@ const initApiRoutes = (app) => {
   // CRUD
   router.get("/test-api", apiController.testApi);
   router.post("/register", apiController.register);
+  router.post("/login", apiController.login);
 
   return app.use("/api/v1/", router);
 };
