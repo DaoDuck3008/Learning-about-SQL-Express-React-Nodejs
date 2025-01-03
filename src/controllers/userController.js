@@ -2,12 +2,24 @@ import userService from "../service/userService";
 
 const readFunc = async (req, res) => {
   try {
-    const data = await userService.getAllUser();
-    return res.status(200).json({
-      EM: data.EM,
-      EC: data.EC,
-      DT: data.DT,
-    });
+    if (req.query.page && req.query.limit) {
+      let page = req.query.page;
+      let limit = req.query.limit;
+
+      let data = await userService.getUserWithPagination(+page, +limit);
+      return res.status(200).json({
+        EM: data.EM,
+        EC: data.EC,
+        DT: data.DT,
+      });
+    } else {
+      const data = await userService.getAllUser();
+      return res.status(200).json({
+        EM: data.EM,
+        EC: data.EC,
+        DT: data.DT,
+      });
+    }
   } catch (error) {
     console.log(error);
     return res.status(500).json({
