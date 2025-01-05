@@ -81,6 +81,27 @@ const updateAnUser = async (data) => {
 
 const deleteAnUser = async (userId) => {
   try {
+    const user = await db.User.findOne({
+      where: { id: userId },
+    });
+
+    if (user) {
+      await db.User.destroy({
+        where: { id: userId },
+      });
+
+      return {
+        EM: "Delete user success!",
+        EC: 0,
+        DT: [],
+      };
+    } else {
+      return {
+        EM: "Cannot find user",
+        EC: -1,
+        DT: [],
+      };
+    }
   } catch (error) {
     console.log(">>> There are something wrongs in service.", error);
     return {

@@ -69,6 +69,7 @@ const updateFunc = async (req, res) => {
 const deleteFunc = async (req, res) => {
   try {
     // delete user
+    let data = await userService.deleteAnUser(req.body.id);
     return res.status(200).json({
       EM: data.EM,
       EC: data.EC,
